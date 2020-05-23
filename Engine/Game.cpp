@@ -59,7 +59,7 @@ void Game::UpdateModel()
 				keyAlreadyPressed = true;
 			}
 			else
-				if (wnd.kbd.KeyIsPressed(VK_DOWN)) {
+				if (wnd.kbd.KeyIsPressed(VK_DOWN)) { //Falta solucionar el bloquedo de esta tecla cuando se avanza verticalmente
 					delta_loc = { 0, 1 };
 					keyAlreadyPressed = true;
 				}
