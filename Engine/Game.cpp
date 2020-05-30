@@ -47,6 +47,8 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	float dt = frameTimer.Mark();
+	
 	if (wnd.kbd.KeyIsPressed(VK_RETURN)) {
 		isGameStarted = true;
 	}

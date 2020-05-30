@@ -28,6 +28,7 @@
 #include "Snake.h"
 #include "Apple.h"
 #include "Obstacle.h"
+#include "FrameTimer.h"
 class Game
 {
 public:
@@ -46,6 +47,7 @@ private:
 	Graphics gfx;  //Objeto gráfico de la clase Graphics. Sus métodos permiten manipular los pixeles de la pantalla.
 	/********************************/
 	Board board;
+	FrameTimer frameTimer;
 	std::random_device dev; //seed?
 	std::mt19937 rng; //random number generator 
 	std::uniform_int_distribution<int> boardDistX;
