@@ -32,9 +32,9 @@
 class Game
 {
 public:
-	Game( class MainWindow& wnd );
-	Game( const Game& ) = delete;
-	Game& operator=( const Game& ) = delete;
+	Game(class MainWindow& wnd);
+	Game(const Game&) = delete;
+	Game& operator=(const Game&) = delete;
 	void Go();
 private:
 	void ComposeFrame();
@@ -59,14 +59,17 @@ private:
 	Apple apple;
 	Obstacle stone[maxStones];
 	Location delta_loc = { 1, 0 };
-	
-	
+
+	float time = 0;
+	float snekTime = 0;
 	int framesCounter = 0;
 	int points = 0;
-	int snakeMoveByPeriod = 18;
+	float snakeMoveByPeriod = 0.5f; //In seconds
 	bool keyAlreadyPressed = false;
 	bool isGameOver = false;
-	bool isGameStarted = false; 
+	bool isGameStarted = false;
+	
+
 	
 	
 	/********************************/

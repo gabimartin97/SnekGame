@@ -77,13 +77,15 @@ void Game::UpdateModel()
 					}
 		}
 		framesCounter++;
+		time = frameTimer.Time();
 		apple.Update();
 
-		if (framesCounter >= snakeMoveByPeriod)
+		if (time - snekTime >= snakeMoveByPeriod)
 		{
+			snekTime = frameTimer.Time();
 			const Location next = snek.GetNextHeadLocation(delta_loc);
 			snek.CheckSelfCollision(next);
-
+			
 			for (int i = 0; i < points / pointsForStone && i < maxStones; i++)
 			{
 				if (next == stone[i].GetLocation())
@@ -111,8 +113,8 @@ void Game::UpdateModel()
 
 						} while (snek.IsInTile(stone[points/pointsForStone].GetLocation()));
 					}
-					if (points % pointsForSpeedBoost == 0 && snakeMoveByPeriod >= 8) {
-						snakeMoveByPeriod = snakeMoveByPeriod - 1;
+					if (points % pointsForSpeedBoost == 0 && snakeMoveByPeriod > 0.05f) {
+						snakeMoveByPeriod = snakeMoveByPeriod - 0.05f;
 					}
 					points++;
 
