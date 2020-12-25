@@ -54,29 +54,8 @@ void Game::UpdateModel()
 	}
 
 	if (isGameStarted && !isGameOver) {
-
-		if (!keyAlreadyPressed) {
-			if (wnd.kbd.KeyIsPressed(VK_UP)) {
-				delta_loc = { 0, -1 };
-				keyAlreadyPressed = true;
-			}
-			else
-				if (wnd.kbd.KeyIsPressed(VK_DOWN)) { //Falta solucionar el bloquedo de esta tecla cuando se avanza verticalmente
-					delta_loc = { 0, 1 };
-					keyAlreadyPressed = true;
-				}
-				else
-					if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
-						delta_loc = { -1, 0 };
-						keyAlreadyPressed = true;
-					}
-					else if (wnd.kbd.KeyIsPressed(VK_RIGHT))
-					{
-						delta_loc = { 1, 0 };
-						keyAlreadyPressed = true;
-					}
-		}
-		framesCounter++;
+		
+		ManageSnakeMovement();			//Control de movimiento por teclado
 		time = frameTimer.Time();
 		apple.Update();
 
@@ -119,7 +98,7 @@ void Game::UpdateModel()
 					points++;
 
 				}
-				framesCounter = 0;
+				
 				keyAlreadyPressed = false;
 
 			}
@@ -129,6 +108,7 @@ void Game::UpdateModel()
 		}
 	}
 }
+
 void Game::ComposeFrame()
 {
 	if (!isGameStarted) {
@@ -150,6 +130,41 @@ void Game::ComposeFrame()
 	}
 }
 
-	
+void Game::ManageSnakeMovement()
+{
+	if (!keyAlreadyPressed) {
+		if (wnd.kbd.KeyIsPressed(VK_UP)) {
+			if (!(delta_loc == Location{ 0, 1 }))
+			{
+				delta_loc = { 0, -1 };
+				keyAlreadyPressed = true;
+			}
+		}
+		else
+			if (wnd.kbd.KeyIsPressed(VK_DOWN)) {
+				if (!(delta_loc == Location{ 0, -1 }))
+				{
+					delta_loc = { 0, 1 };
+					keyAlreadyPressed = true;
+				}
+			}
+			else
+				if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
+					if (!(delta_loc == Location{ 1, 0 }))
+					{
+						delta_loc = { -1, 0 };
+						keyAlreadyPressed = true;
+					}
+				}
+				else if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+				{
+					if (!(delta_loc == Location{ -1, 0 }))
+					{
+						delta_loc = { 1, 0 };
+						keyAlreadyPressed = true;
+					}
+				}
+	}
+}
 	
 

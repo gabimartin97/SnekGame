@@ -41,6 +41,7 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
+	void ManageSnakeMovement();
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -62,7 +63,6 @@ private:
 
 	float time = 0;
 	float snekTime = 0;
-	int framesCounter = 0;
 	int points = 0;
 	float snakeMoveByPeriod = 0.5f; //In seconds
 	bool keyAlreadyPressed = false;

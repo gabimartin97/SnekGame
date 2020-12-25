@@ -14,6 +14,9 @@ void Apple::Respawn(int x, int y)
 {
 	loc.x = x;
 	loc.y = y;
+	g = 0;
+	b = 0;
+	colorIncrement = true;
 }
 
 void Apple::Update()

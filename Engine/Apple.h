@@ -24,7 +24,7 @@ private:
 	bool isCollided = false;
 	bool colorIncrement = true;
 	int r = 200;
-	int g = 255;
-	int b = 255;
+	int g = 0;
+	int b = 0;
 
 };
