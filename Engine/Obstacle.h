@@ -8,6 +8,7 @@ public:
 	
 	void Draw(Board& board) const;
 	void Spawn(int x_in, int y_in);
+	void Spawn(const Location& loc_in);
 	Location GetLocation() const;
 
 private:

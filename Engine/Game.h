@@ -54,7 +54,7 @@ private:
 	std::uniform_int_distribution<int> boardDistX;
 	std::uniform_int_distribution<int> boardDistY;
 	static constexpr int maxStones = 50;
-	static constexpr int pointsForStone = 2;
+	static constexpr int pointsForStone = 1;
 	static constexpr int pointsForSpeedBoost = 3;
 	Snake snek;
 	Apple apple;

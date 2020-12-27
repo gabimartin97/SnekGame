@@ -48,10 +48,8 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	float dt = frameTimer.Mark();
+	if (wnd.kbd.KeyIsPressed(VK_RETURN)) isGameStarted = true;
 	
-	if (wnd.kbd.KeyIsPressed(VK_RETURN)) {
-		isGameStarted = true;
-	}
 
 	if (isGameStarted && !isGameOver) {
 		
@@ -88,8 +86,9 @@ void Game::UpdateModel()
 					snek.Grow();
 					if (points % pointsForStone == 0) {
 						do {
-							stone[points/pointsForStone].Spawn(boardDistX(rng), boardDistY(rng));
-
+							Location nextStoneLocation = { boardDistX(rng), boardDistY(rng) };
+							stone[points/pointsForStone].Spawn(nextStoneLocation);
+							if (nextStoneLocation == next) continue;
 						} while (snek.IsInTile(stone[points/pointsForStone].GetLocation()));
 					}
 					if (points % pointsForSpeedBoost == 0 && snakeMoveByPeriod > 0.05f) {
