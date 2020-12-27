@@ -20,6 +20,7 @@ private:
 
 public:
 	Snake(const Location& loc_in);
+	void ResetSnake(const Location& loc_in);
 	void MoveBy(const Location& delta_loc);
 	void Grow();
 	void Draw(Board& board) const; //Porque no puedo coner const aca?

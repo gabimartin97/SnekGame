@@ -7,6 +7,15 @@ Board::Board(Graphics & gfx_in)
 {
 }
 
+void Board::Resetboard()
+{
+	for (int i = 0; i < (width * height); i++)
+	{
+		hasObstacle[i] = false ;
+	}
+	
+}
+
 void Board::DrawCell(const Location& loc, Color c)
 {
 	assert(loc.x >= 0);
@@ -35,8 +44,9 @@ void Board::DrawSmallCell(const Location& loc, Color c)
 
 void Board::DrawBorders() const
 {
-	int lowerLimit = originY + (dimension * height) + dimension + 1;
-	int rightLimit = originX + (dimension * width) + dimension + 1;
+	
+	int lowerLimit = originY + (dimension * height);
+	int rightLimit = originX + (dimension * width);
 	int upperLimit = originY - 1;
 	int leftLimit = originX - 1;
 
@@ -92,6 +102,16 @@ int Board::GetHeight() const
 bool Board::IsInsideBoard(const Location & loc) const
 {
 	return loc.x >= 0 && loc.x <= width && loc.y >= 0 && loc.y <= height;
+}
+
+bool Board::CheckForObstacle(const Location & loc) const
+{
+	return hasObstacle[(loc.y * width) + loc.x];
+}
+
+void Board::WriteObstacle(const Location & loc)
+{
+	hasObstacle[(loc.y * width) + loc.x] = true;
 }
 
 

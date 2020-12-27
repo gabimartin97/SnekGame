@@ -11,6 +11,22 @@ Snake::Snake(const Location & loc_in)
 	
 }
 
+void Snake::ResetSnake(const Location & loc_in)
+{
+	 createdSegments = 1;
+	 selfCollided = false;
+	 isCollided = false;
+	 nSegments = 4;
+
+	 segments[0].InitHead(loc_in);
+	 for (int i = 1; i <= nSegments; i++) {
+
+		 segments[i].InitBody(loc_in, createdSegments);
+		 createdSegments++;
+	 }
+
+}
+
 void Snake::MoveBy(const Location & delta_loc)
 {
 	//Comenzamos desde el último segmento y avanzamos hacia el anterior. Todos menos la cabeza

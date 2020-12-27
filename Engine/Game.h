@@ -42,6 +42,7 @@ private:
 	/********************************/
 	/*  User Functions              */
 	void ManageSnakeMovement();
+	void ResetGame();
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -55,16 +56,16 @@ private:
 	std::uniform_int_distribution<int> boardDistY;
 	static constexpr int maxStones = 50;
 	static constexpr int pointsForStone = 1;
-	static constexpr int pointsForSpeedBoost = 3;
+	static constexpr int pointsForSpeedBoost = 2;
 	Snake snek;
 	Apple apple;
 	Obstacle stone[maxStones];
-	Location delta_loc = { 1, 0 };
+	Location delta_loc = { 0, 1 };
 
 	float time = 0;
 	float snekTime = 0;
 	int points = 0;
-	float snakeMoveByPeriod = 0.5f; //In seconds
+	float snakeMoveByPeriod = 0.4f; //In seconds
 	bool keyAlreadyPressed = false;
 	bool isGameOver = false;
 	bool isGameStarted = false;

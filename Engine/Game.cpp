@@ -30,7 +30,7 @@ Game::Game( MainWindow& wnd )
 	rng(dev()),
 	boardDistX(0,board.GetWidth()),
 	boardDistY(0, board.GetHeight()),
-	snek({3,3}),
+	snek({10,18}),
 	apple({boardDistX(rng),boardDistY(rng)})
 
 {
@@ -48,7 +48,7 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	float dt = frameTimer.Mark();
-	if (wnd.kbd.KeyIsPressed(VK_RETURN)) isGameStarted = true;
+	
 	
 
 	if (isGameStarted && !isGameOver) {
@@ -62,20 +62,12 @@ void Game::UpdateModel()
 			snekTime = frameTimer.Time();
 			const Location next = snek.GetNextHeadLocation(delta_loc);
 			snek.CheckSelfCollision(next);
-			
-			for (int i = 0; i < points / pointsForStone && i < maxStones; i++)
-			{
-				if (next == stone[i].GetLocation())
-				{
-					isGameOver = true;
-				}
-				
-			}
-			if (!board.IsInsideBoard(next) || snek.IsCollided() || isGameOver)
+			if (!board.IsInsideBoard(next) || snek.IsCollided() || board.CheckForObstacle(next))
 			{
 				isGameOver = true;
 			}
-			else {
+			else
+			{
 				snek.MoveBy(delta_loc);
 
 				if (snek.CheckFood(apple)) {
@@ -87,12 +79,12 @@ void Game::UpdateModel()
 					if (points % pointsForStone == 0) {
 						do {
 							Location nextStoneLocation = { boardDistX(rng), boardDistY(rng) };
-							stone[points/pointsForStone].Spawn(nextStoneLocation);
+							stone[points/pointsForStone].Spawn(nextStoneLocation, board);
 							if (nextStoneLocation == next) continue;
 						} while (snek.IsInTile(stone[points/pointsForStone].GetLocation()));
 					}
 					if (points % pointsForSpeedBoost == 0 && snakeMoveByPeriod > 0.05f) {
-						snakeMoveByPeriod = snakeMoveByPeriod - 0.05f;
+						snakeMoveByPeriod = snakeMoveByPeriod - 0.025f;
 					}
 					points++;
 
@@ -105,6 +97,19 @@ void Game::UpdateModel()
 
 
 		}
+	}
+	else
+	{
+		 if (isGameStarted && isGameOver && wnd.kbd.KeyIsPressed(VK_RETURN))
+		{
+			ResetGame();
+			wnd.kbd.Flush();
+			isGameStarted = true;
+		}
+		 else 
+			 if (wnd.kbd.KeyIsPressed(VK_RETURN)) isGameStarted = true;
+		
+		
 	}
 }
 
@@ -164,6 +169,20 @@ void Game::ManageSnakeMovement()
 					}
 				}
 	}
+}
+
+void Game::ResetGame()
+{
+	time = 0;
+	snekTime = 0;
+	points = 0;
+	snakeMoveByPeriod = 0.4f; //In seconds
+	isGameOver = false;
+	isGameStarted = false; 
+
+	snek.ResetSnake(Location{ 3,3 });
+	board.Resetboard();
+
 }
 	
 

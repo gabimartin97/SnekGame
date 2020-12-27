@@ -7,13 +7,15 @@ class Board
 {
 public:
 	Board(Graphics& gfx_in);
+	void Resetboard();
 	void DrawCell(const Location& loc, Color c);
 	void DrawSmallCell(const Location& loc, Color c);
 	void DrawBorders() const;
 	int GetWidth() const;
 	int GetHeight() const;
 	bool IsInsideBoard(const Location& loc) const;
-	
+	bool CheckForObstacle(const Location& loc)const;
+	void WriteObstacle(const Location& loc);
 	
 private:
 	static constexpr int originX = 100;
@@ -24,6 +26,7 @@ private:
 	static constexpr int borderWidth = 2;
 	static constexpr Color BorderColor = Colors::Red;
 	Graphics& gfx;
+	bool hasObstacle[width * height] = { false };
 };
 
 
