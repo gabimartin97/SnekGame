@@ -115,6 +115,7 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	board.DrawCell(Location{24,24},Colors::Magenta);
 	if (!isGameStarted) {
 		SpriteCodex::DrawTitle(300,200,gfx);
 	}

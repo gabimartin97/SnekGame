@@ -101,7 +101,7 @@ int Board::GetHeight() const
 
 bool Board::IsInsideBoard(const Location & loc) const
 {
-	return loc.x >= 0 && loc.x <= width && loc.y >= 0 && loc.y <= height;
+	return loc.x >= 0 && loc.x < width && loc.y >= 0 && loc.y < height;
 }
 
 bool Board::CheckForObstacle(const Location & loc) const
