@@ -9,9 +9,10 @@
 class Apple {
 	
 public:
-	Apple(const Location& loc_in);
+	Apple(const Location& loc_in, Board& board);
 	void Draw(Board& board) const;
-	void Respawn(int x, int y);
+	void Respawn(int x, int y, Board& board);
+	void Respawn(Location& loc_in, Board& board);
 	void Update();
 	Location GetLocation() const;
 	
@@ -26,5 +27,6 @@ private:
 	int r = 200;
 	int g = 0;
 	int b = 0;
+	static constexpr int obstacleType = 3;
 
 };

@@ -2,10 +2,10 @@
 #include "Location.h"
 #include "Graphics.h"
 #include "Board.h"
-class Obstacle {
+class Poison {
 
 public:
-	
+
 	void Draw(Board& board) const;
 	void Spawn(int x_in, int y_in, Board& board);
 	void Spawn(const Location& loc_in, Board& board);
@@ -13,6 +13,6 @@ public:
 
 private:
 	Location loc;
-	const Color c = Colors::Gray;
-	static constexpr int obstacleType = 1;
+	const Color c = Colors::MakeRGB(128,128,192);
+	static constexpr int obstacleType = 2;
 };

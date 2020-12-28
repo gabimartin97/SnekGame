@@ -11,7 +11,7 @@ void Board::Resetboard()
 {
 	for (int i = 0; i < (width * height); i++)
 	{
-		hasObstacle[i] = false ;
+		obstacleMatrix[i] = 0 ;
 	}
 	
 }
@@ -104,14 +104,19 @@ bool Board::IsInsideBoard(const Location & loc) const
 	return loc.x >= 0 && loc.x < width && loc.y >= 0 && loc.y < height;
 }
 
-bool Board::CheckForObstacle(const Location & loc) const
+unsigned int Board::CheckForObstacle(const Location & loc) const
 {
-	return hasObstacle[(loc.y * width) + loc.x];
+	return obstacleMatrix[(loc.y * width) + loc.x];
 }
 
-void Board::WriteObstacle(const Location & loc)
+void Board::WriteObstacle(const Location & loc, const unsigned int type_in)
 {
-	hasObstacle[(loc.y * width) + loc.x] = true;
+	obstacleMatrix[(loc.y * width) + loc.x] = type_in;
+}
+
+void Board::DeleteObstacle(const Location & loc)
+{
+	obstacleMatrix[(loc.y * width) + loc.x] = 0;
 }
 
 

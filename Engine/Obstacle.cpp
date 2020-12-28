@@ -10,7 +10,7 @@ void Obstacle::Spawn(int x, int y, Board& board)
 {
 	loc.x = x;
 	loc.y = y;
-	board.WriteObstacle(loc);
+	board.WriteObstacle(loc, obstacleType);
 		
 }
 

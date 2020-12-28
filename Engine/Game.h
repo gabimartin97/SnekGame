@@ -55,7 +55,7 @@ private:
 	std::uniform_int_distribution<int> boardDistX;
 	std::uniform_int_distribution<int> boardDistY;
 	static constexpr int maxStones = 50;
-	static constexpr int pointsForStone = 1;
+	static constexpr int pointsForStone = 2;
 	static constexpr int pointsForSpeedBoost = 2;
 	Snake snek;
 	Apple apple;
@@ -69,6 +69,7 @@ private:
 	bool keyAlreadyPressed = false;
 	bool isGameOver = false;
 	bool isGameStarted = false;
+	unsigned int stonesSpawned = 0;
 	
 
 	
