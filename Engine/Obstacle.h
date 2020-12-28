@@ -7,8 +7,8 @@ class Obstacle {
 public:
 	
 	void Draw(Board& board) const;
-	void Spawn(int x_in, int y_in, Board& board);
-	void Spawn(const Location& loc_in, Board& board);
+	void Spawn(int x_in, int y_in, Board& board, const unsigned int index);
+	void Spawn(const Location& loc_in, Board& board, const unsigned int index);
 	Location GetLocation() const;
 
 private:

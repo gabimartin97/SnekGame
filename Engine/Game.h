@@ -29,6 +29,7 @@
 #include "Apple.h"
 #include "Obstacle.h"
 #include "FrameTimer.h"
+#include "Poison.h"
 class Game
 {
 public:
@@ -43,6 +44,8 @@ private:
 	/*  User Functions              */
 	void ManageSnakeMovement();
 	void ResetGame();
+	void GenerateRandomPoison();
+	void GenerateRadomApples();
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -54,12 +57,16 @@ private:
 	std::mt19937 rng; //random number generator 
 	std::uniform_int_distribution<int> boardDistX;
 	std::uniform_int_distribution<int> boardDistY;
+	std::uniform_int_distribution<int> PoisonDist;
 	static constexpr int maxStones = 50;
+	static constexpr int maxPoison = 576;
+	static constexpr int maxApples = 5;
 	static constexpr int pointsForStone = 2;
 	static constexpr int pointsForSpeedBoost = 2;
 	Snake snek;
-	Apple apple;
+	Apple apples[maxApples];
 	Obstacle stone[maxStones];
+	Poison poison[maxPoison];
 	Location delta_loc = { 0, 1 };
 
 	float time = 0;
@@ -70,6 +77,7 @@ private:
 	bool isGameOver = false;
 	bool isGameStarted = false;
 	unsigned int stonesSpawned = 0;
+	unsigned int poisonSpawned = 0;
 	
 
 	

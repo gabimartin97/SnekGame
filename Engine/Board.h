@@ -15,7 +15,8 @@ public:
 	int GetHeight() const;
 	bool IsInsideBoard(const Location& loc) const;
 	unsigned int CheckForObstacle(const Location& loc)const;
-	void WriteObstacle(const Location& loc, const unsigned int type_in);
+	unsigned int GetObstacleIndex(const Location& loc);;
+	void WriteObstacle(const Location& loc, const unsigned int type_in, const unsigned int index_in);
 	void DeleteObstacle(const Location& loc);
 	
 private:
@@ -28,6 +29,7 @@ private:
 	static constexpr Color BorderColor = Colors::Red;
 	Graphics& gfx;
 	unsigned int obstacleMatrix[width * height] = { 0 };
+	unsigned int obstacleMatrixIndexes[width * height] = { 0 };
 };
 
 

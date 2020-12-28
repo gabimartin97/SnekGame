@@ -9,10 +9,12 @@
 class Apple {
 	
 public:
-	Apple(const Location& loc_in, Board& board);
+	Apple() = default;
+	Apple(const Location& loc_in, Board& board, const unsigned index);
 	void Draw(Board& board) const;
-	void Respawn(int x, int y, Board& board);
-	void Respawn(Location& loc_in, Board& board);
+	void Respawn(int x, int y, Board& board, const unsigned index);
+	void Respawn(Location& loc_in, Board& board, const unsigned index);
+	void Apple::Spawn(Location& loc_in, Board& board, const unsigned index);
 	void Update();
 	Location GetLocation() const;
 	

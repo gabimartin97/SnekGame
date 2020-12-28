@@ -1,8 +1,8 @@
 #include "Apple.h"
 
-Apple::Apple(const Location& loc_in, Board& board) {
+Apple::Apple(const Location& loc_in, Board& board, const unsigned index) {
 	loc = loc_in;
-	board.WriteObstacle(loc, obstacleType);
+	board.WriteObstacle(loc, obstacleType, index);
 }
 
 void Apple::Draw(Board& board) const
@@ -10,7 +10,7 @@ void Apple::Draw(Board& board) const
 	board.DrawCell(loc, c);
 }
 
-void Apple::Respawn(int x, int y, Board& board)
+void Apple::Respawn(int x, int y, Board& board, const unsigned index)
 {
 	board.DeleteObstacle(loc);
 	loc.x = x;
@@ -18,12 +18,18 @@ void Apple::Respawn(int x, int y, Board& board)
 	g = 0;
 	b = 0;
 	colorIncrement = true;
-	board.WriteObstacle(loc, obstacleType);
+	board.WriteObstacle(loc, obstacleType, index);
 }
 
-void Apple::Respawn(Location & loc_in, Board & board)
+void Apple::Spawn(Location& loc_in, Board& board, const unsigned index)
 {
-	Respawn(loc_in.x, loc_in.y, board);
+	loc = loc_in;
+	board.WriteObstacle(loc, obstacleType, index);
+}
+
+void Apple::Respawn(Location & loc_in, Board & board, const unsigned index)
+{
+	Respawn(loc_in.x, loc_in.y, board, index);
 }
 
 void Apple::Update()

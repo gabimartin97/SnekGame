@@ -109,14 +109,21 @@ unsigned int Board::CheckForObstacle(const Location & loc) const
 	return obstacleMatrix[(loc.y * width) + loc.x];
 }
 
-void Board::WriteObstacle(const Location & loc, const unsigned int type_in)
+unsigned int Board::GetObstacleIndex(const Location & loc)
+{
+	return obstacleMatrixIndexes[(loc.y * width) + loc.x];
+}
+
+void Board::WriteObstacle(const Location & loc, const unsigned int type_in, const unsigned int index_in)
 {
 	obstacleMatrix[(loc.y * width) + loc.x] = type_in;
+	obstacleMatrixIndexes[(loc.y * width) + loc.x] = index_in;
 }
 
 void Board::DeleteObstacle(const Location & loc)
 {
 	obstacleMatrix[(loc.y * width) + loc.x] = 0;
+	obstacleMatrixIndexes[(loc.y * width) + loc.x] = 0;
 }
 
 
