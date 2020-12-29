@@ -36,7 +36,10 @@ Game::Game(MainWindow& wnd)
 	boardDistX(0, board.GetWidth() - 1),
 	boardDistY(0, board.GetHeight() - 1),
 	PoisonDist(0, 4),
-	snek({12,12}, board)
+	snek({12,12}, board),
+	pedo(L"Sounds\\fart2.wav"),
+	appleEaten(L"Sounds\\coin.wav")
+
 	
 
 {
@@ -95,6 +98,7 @@ void Game::UpdateModel()
 					} while (snek.IsInTile(apples[appleIndex].GetLocation()));
 					points++;
 					snek.Grow(board);
+					appleEaten.Play();
 					if ((points % pointsForStone == 0) && (stonesSpawned < maxStones))
 					{
 						do {
@@ -119,8 +123,8 @@ void Game::UpdateModel()
 				{
 					int poisonIndex = board.GetObstacleIndex(next);
 					poison[poisonIndex].Despawn(board);
-					if (snakeMoveByPeriod > 0.05f) snakeMoveByPeriod -= 0.025f;
-
+					if (snakeMoveByPeriod > minSnekPeriod) snakeMoveByPeriod -= 0.025f;
+					pedo.Play();
 					break;
 				}
 				default:
