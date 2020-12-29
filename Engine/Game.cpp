@@ -21,6 +21,7 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "SpriteCodex.h"
+#define Snek 4
 #define Apples 3
 #define Poison 2
 #define Stone 1
@@ -35,8 +36,8 @@ Game::Game(MainWindow& wnd)
 	boardDistX(0, board.GetWidth() - 1),
 	boardDistY(0, board.GetHeight() - 1),
 	PoisonDist(0, 4),
-	snek({10,18})
-	//apple({boardDistX(rng),boardDistY(rng)}, board)
+	snek({10,18}, board)
+	
 
 {
 	GenerateRandomPoison();
@@ -93,7 +94,7 @@ void Game::UpdateModel()
 
 					} while (snek.IsInTile(apples[appleIndex].GetLocation()));
 					points++;
-					snek.Grow();
+					snek.Grow(board);
 					if ((points % pointsForStone == 0) && (stonesSpawned < maxStones))
 					{
 						do {
@@ -125,7 +126,7 @@ void Game::UpdateModel()
 				}
 			
 				keyAlreadyPressed = false;
-				if(!isGameOver) snek.MoveBy(delta_loc);
+				if(!isGameOver) snek.MoveBy(delta_loc, board);
 
 			}
 
@@ -156,12 +157,8 @@ void Game::ComposeFrame()
 	}
 	else {
 		board.DrawBorders();
-		//apple.Draw(board);
-		snek.Draw(board);
-		/*for (unsigned int i = 0; i < stonesSpawned; i++)
-		{
-			stone[i].Draw(board);
-		}*/
+		
+		
 
 		for (int i = 0; i < (board.GetHeight()); i++)
 		{
@@ -184,8 +181,13 @@ void Game::ComposeFrame()
 				case Apples:
 				{
 					int appleIndex = board.GetObstacleIndex(Location{ k, i });
-					//board.DrawCell(Location{ k, i }, Colors::Red);
 					apples[appleIndex].Draw(board);
+					break;
+				}
+				case Snek:
+				{
+					snek.Draw(board, board.GetObstacleIndex(Location{ k, i }));
+					break;
 				}
 				default:
 					break;
@@ -248,7 +250,7 @@ void Game::ResetGame()
 	isGameOver = false;
 	isGameStarted = false; 
 
-	snek.ResetSnake(Location{ 3,3 });
+	snek.ResetSnake(Location{ 3,3 }, board);
 	board.Resetboard();
 	GenerateRandomPoison();
 	GenerateRadomApples();

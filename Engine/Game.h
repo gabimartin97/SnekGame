@@ -30,6 +30,7 @@
 #include "Obstacle.h"
 #include "FrameTimer.h"
 #include "Poison.h"
+
 class Game
 {
 public:
