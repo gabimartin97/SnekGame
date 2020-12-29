@@ -36,7 +36,7 @@ Game::Game(MainWindow& wnd)
 	boardDistX(0, board.GetWidth() - 1),
 	boardDistY(0, board.GetHeight() - 1),
 	PoisonDist(0, 4),
-	snek({10,18}, board)
+	snek({12,12}, board)
 	
 
 {
@@ -116,11 +116,13 @@ void Game::UpdateModel()
 					break;
 
 				case Poison:
-					if(snakeMoveByPeriod > 0.05f) snakeMoveByPeriod -= 0.025f;
-					
-					board.WriteObstacle(next, EmptyBoard, 0);
+				{
+					int poisonIndex = board.GetObstacleIndex(next);
+					poison[poisonIndex].Despawn(board);
+					if (snakeMoveByPeriod > 0.05f) snakeMoveByPeriod -= 0.025f;
+
 					break;
-				
+				}
 				default:
 					break;
 				}

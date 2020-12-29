@@ -19,8 +19,9 @@ void Poison::Spawn(const Location & loc_in, Board& board, const unsigned index)
 	Spawn(loc_in.x, loc_in.y, board, index);
 }
 
-void Poison::Despawn()
+void Poison::Despawn(Board& board)
 {
+	board.WriteObstacle(loc, 0, 0);
 	isEaten = true;
 }
 

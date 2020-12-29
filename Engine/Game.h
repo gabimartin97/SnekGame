@@ -31,6 +31,7 @@
 #include "FrameTimer.h"
 #include "Poison.h"
 
+
 class Game
 {
 public:
@@ -69,7 +70,7 @@ private:
 	Obstacle stone[maxStones];
 	Poison poison[maxPoison];
 	Location delta_loc = { 0, 1 };
-
+	 
 	float time = 0;
 	float snekTime = 0;
 	int points = 0;
