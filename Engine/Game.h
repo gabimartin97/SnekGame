@@ -31,6 +31,7 @@
 #include "FrameTimer.h"
 #include "Poison.h"
 #include "Sound.h"
+#include "SoundEffect.h"
 
 
 class Game
@@ -72,13 +73,13 @@ private:
 	Obstacle stone[maxStones];
 	Poison poison[maxPoison];
 	Location delta_loc = { 0, 1 };
-	Sound pedo;
+	SoundEffect pedo;
 	Sound appleEaten;
 	 
 	float time = 0;
 	float snekTime = 0;
 	int points = 0;
-	float snakeMoveByPeriod = 0.4f; //In seconds
+	float snakeMoveByPeriod = 0.25f; //In seconds
 	bool keyAlreadyPressed = false;
 	bool isGameOver = false;
 	bool isGameStarted = false;

@@ -37,7 +37,7 @@ Game::Game(MainWindow& wnd)
 	boardDistY(0, board.GetHeight() - 1),
 	PoisonDist(0, 4),
 	snek({12,12}, board),
-	pedo(L"Sounds\\fart2.wav"),
+	pedo({ L"Sounds\\fart2.wav", L"Sounds\\fart1.wav" }),
 	appleEaten(L"Sounds\\coin.wav")
 
 	
@@ -123,8 +123,8 @@ void Game::UpdateModel()
 				{
 					int poisonIndex = board.GetObstacleIndex(next);
 					poison[poisonIndex].Despawn(board);
-					if (snakeMoveByPeriod > minSnekPeriod) snakeMoveByPeriod -= 0.025f;
-					pedo.Play();
+					if (snakeMoveByPeriod > minSnekPeriod) snakeMoveByPeriod -= 0.01f;
+					pedo.Play(rng,0.8f);
 					break;
 				}
 				default:
