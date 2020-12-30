@@ -47,11 +47,12 @@ public:
 	void DrawAllObjects();
 	void UpdateObjects();
 private:
-	static constexpr int originX = 100;
-	static constexpr int originY = 50;
+
 	static constexpr int width = 25;	// Ancho de tablero en cantidad de celdas
 	static constexpr int height = 25;	// Alto de tablero en cantidad de celdas
 	static constexpr int dimension = 20; //dimensión de cada celda
+	static constexpr int originX = (((Graphics::ScreenWidth) / 2) - (width / 2 * dimension));
+	static constexpr int originY = (((Graphics::ScreenHeight) / 2) - (height / 2 * dimension));;
 	static constexpr int borderWidth = 2;
 	static constexpr Color BorderColor = Colors::Red;
 	CellObjects objectMatrix[width * height] = { CellObjects::EmptyBoard };
