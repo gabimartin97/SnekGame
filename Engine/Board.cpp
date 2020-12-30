@@ -1,4 +1,9 @@
 #include "Board.h"
+#define Snek 4
+#define Apples 3
+#define Poison 2
+#define Stone 1
+#define EmptyBoard 0
 
 
 Board::Board(Graphics & gfx_in)
@@ -104,7 +109,7 @@ bool Board::IsInsideBoard(const Location & loc) const
 	return loc.x >= 0 && loc.x < width && loc.y >= 0 && loc.y < height;
 }
 
-unsigned int Board::CheckForObstacle(const Location & loc) const
+unsigned int Board::CheckForObject(const Location & loc) const
 {
 	return obstacleMatrix[(loc.y * width) + loc.x];
 }
@@ -126,4 +131,73 @@ void Board::DeleteObstacle(const Location & loc)
 	obstacleMatrixIndexes[(loc.y * width) + loc.x] = 0;
 }
 
+void Board::SpawnObject(const Location & loc, const int type)
+{
+	obstacleMatrix[(loc.y * width) + loc.x] = type;
+}
 
+void Board::DrawAllObjects() 
+{
+	for (int i = 0; i < (height); i++)
+	{
+		for (int k = 0; k < (width); k++)
+		{
+			const Location casilla = Location{ k,i };
+			switch (CheckForObject(casilla))
+			{
+			case Poison:
+			{
+				DrawSmallCell(casilla, Colors::Magenta);
+				break;
+			}
+			case Stone:
+			{
+				DrawSmallCell(casilla, Colors::Gray);
+				
+				break;
+			}
+			case Apples:
+			{
+				DrawSmallCell(casilla, apple.GetColor() );
+				break;
+			}
+			default:
+				break;
+
+			}
+		}
+	}
+}
+
+void Board::UpdateObjects()
+{
+	apple.Update();
+}
+
+void Board::Apple::Update()
+{
+	if (colorIncrement)
+	{
+		g += 5;
+		b += 5;
+		if (g >= 255 || b >= 255)
+		{
+			colorIncrement = false;
+		}
+	}
+	if (!colorIncrement)
+	{
+		g -= 5;
+		b -= 5;
+		if (g <= 0 || b <= 0)
+		{
+			colorIncrement = true;
+		}
+	}
+	c = Colors::MakeRGB(r, g, b);
+}
+
+Color Board::Apple::GetColor() const
+{
+	return c;
+}

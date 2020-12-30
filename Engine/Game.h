@@ -26,10 +26,7 @@
 #include "Board.h"
 #include <random>
 #include "Snake.h"
-#include "Apple.h"
-#include "Obstacle.h"
 #include "FrameTimer.h"
-#include "Poison.h"
 #include "Sound.h"
 #include "SoundEffect.h"
 
@@ -49,7 +46,7 @@ private:
 	void ManageSnakeMovement();
 	void ResetGame();
 	void GenerateRandomPoison();
-	void GenerateRadomApples();
+	void GenerateRandomApples();
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -61,17 +58,13 @@ private:
 	std::mt19937 rng; //random number generator 
 	std::uniform_int_distribution<int> boardDistX;
 	std::uniform_int_distribution<int> boardDistY;
-	std::uniform_int_distribution<int> PoisonDist;
 	static constexpr int maxStones = 50;
-	static constexpr int maxPoison = 576;
+	static constexpr int maxPoison = 125;
 	static constexpr int maxApples = 5;
 	static constexpr int pointsForStone = 2;
 	static constexpr int pointsForSpeedBoost = 2;
 	static constexpr float minSnekPeriod = 0.04f;
 	Snake snek;
-	Apple apples[maxApples];
-	Obstacle stone[maxStones];
-	Poison poison[maxPoison];
 	Location delta_loc = { 0, 1 };
 	SoundEffect pedo;
 	Sound appleEaten;

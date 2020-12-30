@@ -1,6 +1,6 @@
 #pragma once
 #include "Board.h"
-#include "Apple.h"
+//#include "Apple.h"
 class Snake {
 private:
 	class Segment {
@@ -23,10 +23,10 @@ public:
 	void ResetSnake(const Location& loc_in, Board& board);
 	void MoveBy(const Location& delta_loc, Board& board);
 	void Grow(Board& board);
-	void Draw(Board& board, const unsigned int index) const; 
+	void Draw(Board& board) const; 
 	void CheckSelfCollision(const Location& next_mov);
 	void CheckCollision(const Board& board);
-	bool CheckFood(const Apple& apple) const;
+	//bool CheckFood(const Apple& apple) const;
 	bool IsInTile(const Location& target) const;
 	bool IsCollided();
 	Location GetNextHeadLocation(const Location& delta_loc) const;

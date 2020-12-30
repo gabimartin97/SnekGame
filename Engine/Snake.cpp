@@ -51,12 +51,12 @@ void Snake::Grow(Board& board)
 	createdSegments++;
 }
 
-void Snake::Draw(Board& board, const unsigned int index) const
+void Snake::Draw(Board& board) const
 {
-	//for (int i = 0; i < nSegments; i++)
-	//{
-		segments[index].Draw(board);
-	//}
+	for (int i = 0; i < nSegments; i++)
+	{
+		segments[i].Draw(board);
+	}
 	
 }
 
@@ -81,15 +81,15 @@ void Snake::CheckCollision(const Board& board)
 
 }
 
-bool Snake::CheckFood(const Apple & apple) const
-{
-	if (segments[0].GetLoc().x == apple.GetLocation().x &&
-		segments[0].GetLoc().y == apple.GetLocation().y)
-	{
-		return true;
-	}else
-	return false;
-}
+//bool Snake::CheckFood(const Apple & apple) const
+//{
+//	if (segments[0].GetLoc().x == apple.GetLocation().x &&
+//		segments[0].GetLoc().y == apple.GetLocation().y)
+//	{
+//		return true;
+//	}else
+//	return false;
+//}
 
 bool Snake::IsInTile(const Location & target) const
 {

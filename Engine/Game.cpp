@@ -35,7 +35,6 @@ Game::Game(MainWindow& wnd)
 	rng(dev()),
 	boardDistX(0, board.GetWidth() - 1),
 	boardDistY(0, board.GetHeight() - 1),
-	PoisonDist(0, 4),
 	snek({12,12}, board),
 	pedo({ L"Sounds\\fart2.wav", L"Sounds\\fart1.wav" }),
 	appleEaten(L"Sounds\\coin.wav")
@@ -44,7 +43,7 @@ Game::Game(MainWindow& wnd)
 
 {
 	GenerateRandomPoison();
-	GenerateRadomApples();
+	GenerateRandomApples();
 }
 
 void Game::Go()
@@ -65,11 +64,8 @@ void Game::UpdateModel()
 		
 		ManageSnakeMovement();			//Control de movimiento por teclado
 		time = frameTimer.Time();
-			
-		for (Apple& a : apples)
-		{
-			a.Update();
-		}
+		board.UpdateObjects();
+		
 					
 
 		if (time - snekTime >= snakeMoveByPeriod)
@@ -85,29 +81,33 @@ void Game::UpdateModel()
 			{
 				
 
-				switch (board.CheckForObstacle(next))
+				switch (board.CheckForObject(next))
 				{
 
 				case Apples:
 				{
-					int appleIndex = board.GetObstacleIndex(next);
 
-					do {
-						apples[appleIndex].Respawn(boardDistX(rng), boardDistY(rng), board, appleIndex);
-
-					} while (snek.IsInTile(apples[appleIndex].GetLocation()));
+					Location randomCoords = { boardDistX(rng),boardDistY(rng) };
+					while (board.CheckForObject(randomCoords) != EmptyBoard && !(randomCoords == next))
+					{
+						randomCoords = { boardDistX(rng),boardDistY(rng) };
+					}
+					board.SpawnObject(randomCoords, Apples);
 					points++;
 					snek.Grow(board);
 					appleEaten.Play();
+					
+
 					if ((points % pointsForStone == 0) && (stonesSpawned < maxStones))
 					{
-						do {
-							Location nextStoneLocation = { boardDistX(rng), boardDistY(rng) };
-							if (nextStoneLocation == next) continue;
-							stone[stonesSpawned].Spawn(nextStoneLocation, board, stonesSpawned);
-
-						} while (snek.IsInTile(stone[stonesSpawned].GetLocation()));
+						Location randomCoords = { boardDistX(rng),boardDistY(rng) };
+						while (board.CheckForObject(randomCoords) != EmptyBoard && !(randomCoords == next))
+						{
+							randomCoords = { boardDistX(rng),boardDistY(rng) };
+						}
+						board.SpawnObject(randomCoords, Stone);
 						stonesSpawned++;
+						
 					}
 					if (points % pointsForSpeedBoost == 0 && snakeMoveByPeriod > 0.05f) {
 						snakeMoveByPeriod = snakeMoveByPeriod - 0.015f;
@@ -121,8 +121,8 @@ void Game::UpdateModel()
 
 				case Poison:
 				{
-					int poisonIndex = board.GetObstacleIndex(next);
-					poison[poisonIndex].Despawn(board);
+					//int poisonIndex = board.GetObstacleIndex(next);
+					//poison[poisonIndex].Despawn(board);
 					if (snakeMoveByPeriod > minSnekPeriod) snakeMoveByPeriod -= 0.01f;
 					pedo.Play(rng,0.8f);
 					break;
@@ -163,44 +163,8 @@ void Game::ComposeFrame()
 	}
 	else {
 		board.DrawBorders();
-		
-		
-
-		for (int i = 0; i < (board.GetHeight()); i++)
-		{
-			for (int k = 0; k < (board.GetWidth()); k++)
-			{
-				switch (board.CheckForObstacle(Location{ k,i }))
-				{
-				case Poison:
-				{
-					int poisonIndex = board.GetObstacleIndex(Location{ k, i });
-					poison[poisonIndex].Draw(board);
-					break;
-				}
-				case Stone:
-				{
-					int stoneIndex = board.GetObstacleIndex(Location{ k, i });
-					stone[stoneIndex].Draw(board);
-					break;
-				}
-				case Apples:
-				{
-					int appleIndex = board.GetObstacleIndex(Location{ k, i });
-					apples[appleIndex].Draw(board);
-					break;
-				}
-				case Snek:
-				{
-					snek.Draw(board, board.GetObstacleIndex(Location{ k, i }));
-					break;
-				}
-				default:
-					break;
-
-				}
-			}
-		}
+		snek.Draw(board);
+		board.DrawAllObjects();
 
 		if (isGameOver) {
 			SpriteCodex::DrawGameOver(300, 300, gfx);
@@ -259,35 +223,37 @@ void Game::ResetGame()
 	snek.ResetSnake(Location{ 3,3 }, board);
 	board.Resetboard();
 	GenerateRandomPoison();
-	GenerateRadomApples();
+	GenerateRandomApples();
 }
 
 void Game::GenerateRandomPoison()
 {
-	for (int i = 0; i < (board.GetHeight()); i++)
-	{
-		for (int k = 0; k < (board.GetWidth()); k++)
-		{
-			if ((board.CheckForObstacle(Location{ k,i }) == EmptyBoard) && (PoisonDist(rng) == 3) && (poisonSpawned < maxPoison))
-			{
-				poison[poisonSpawned].Spawn(Location{ k,i }, board, poisonSpawned);
-				poisonSpawned++;
-			}
-		}
-	}
-}
-
-void Game::GenerateRadomApples()
-{
-	for (int i = 0; i < maxApples; i++)
+	for (int i = 0; i < maxPoison; i++)
 	{
 		Location randomCoords = { boardDistX(rng),boardDistY(rng) };
-		while (board.CheckForObstacle(randomCoords) != 0)
+		while (board.CheckForObject(randomCoords) != EmptyBoard)
 		{
 			randomCoords = { boardDistX(rng),boardDistY(rng) };
 
 		}
-		apples[i].Spawn(randomCoords, board, i);
+
+		board.SpawnObject(randomCoords, Poison);
+		poisonSpawned++;
+	}
+}
+
+void Game::GenerateRandomApples()
+{
+	for (int i = 0; i < maxApples; i++)
+	{
+		Location randomCoords = { boardDistX(rng),boardDistY(rng) };
+		while (board.CheckForObject(randomCoords) != EmptyBoard)
+		{
+			randomCoords = { boardDistX(rng),boardDistY(rng) };
+
+		}
+		
+		board.SpawnObject(randomCoords, Apples);
 	}
 }
 	
