@@ -71,40 +71,6 @@ void Snake::CheckSelfCollision(const Location& next_mov)
 	
 }
 
-void Snake::CheckCollision(const Board& board)
-{
-	if (segments[0].GetLoc().x < 0 || segments[0].GetLoc().x > board.GetWidth() ||
-		segments[0].GetLoc().y < 0 || segments[0].GetLoc().y > board.GetHeight())
-	{
-		isCollided = true;
-	}
-
-}
-
-//bool Snake::CheckFood(const Apple & apple) const
-//{
-//	if (segments[0].GetLoc().x == apple.GetLocation().x &&
-//		segments[0].GetLoc().y == apple.GetLocation().y)
-//	{
-//		return true;
-//	}else
-//	return false;
-//}
-
-bool Snake::IsInTile(const Location & target) const
-{
-	for (int i = 0; i < nSegments; i++) {
-		if (segments[i].GetLoc() == target) //operador == sobrecargado
-		{
-			return true;
-			break;
-		}
-	}
-	return false;
-	
-	
-}
-
 bool Snake::IsCollided()
 {
 	return (selfCollided || isCollided);

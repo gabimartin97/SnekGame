@@ -25,9 +25,6 @@ public:
 	void Grow(Board& board);
 	void Draw(Board& board) const; 
 	void CheckSelfCollision(const Location& next_mov);
-	void CheckCollision(const Board& board);
-	//bool CheckFood(const Apple& apple) const;
-	bool IsInTile(const Location& target) const;
 	bool IsCollided();
 	Location GetNextHeadLocation(const Location& delta_loc) const;
 
@@ -38,7 +35,7 @@ private: //Este otro private simplemente es visual, como par separar cosas
 	static constexpr Color bodyColor3 = Colors::MakeRGB(0, 80, 21);
 	static constexpr int nSegmentsMax = 100;
 	static constexpr int obstacleType = 4;
-	int nSegments = 4; //points to the next unused member of the segment array
+	int nSegments = 2; //points to the next unused member of the segment array
 	int createdSegments = 1;
 	bool selfCollided = false;
 	bool isCollided = false;
