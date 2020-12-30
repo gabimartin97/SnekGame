@@ -15,6 +15,7 @@ private:
 	private:
 		Location loc;
 		Color c;
+		Board::CellObjects obstacleType = Board::CellObjects::Snek;
 
 	};
 
@@ -34,7 +35,7 @@ private: //Este otro private simplemente es visual, como par separar cosas
 	static constexpr Color bodyColor2 = Colors::MakeRGB(0, 102, 0);
 	static constexpr Color bodyColor3 = Colors::MakeRGB(0, 80, 21);
 	static constexpr int nSegmentsMax = 100;
-	static constexpr int obstacleType = 4;
+	Board::CellObjects obstacleType = Board::CellObjects::Snek;
 	int nSegments = 2; //points to the next unused member of the segment array
 	int createdSegments = 1;
 	bool selfCollided = false;

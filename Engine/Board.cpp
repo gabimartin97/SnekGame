@@ -1,9 +1,4 @@
 #include "Board.h"
-#define Snek 4
-#define Apples 3
-#define Poison 2
-#define Stone 1
-#define EmptyBoard 0
 
 
 Board::Board(Graphics & gfx_in)
@@ -16,7 +11,7 @@ void Board::Resetboard()
 {
 	for (int i = 0; i < (width * height); i++)
 	{
-		objectMatrix[i] = 0 ;
+		objectMatrix[i] = CellObjects::EmptyBoard ;
 	}
 	
 }
@@ -109,20 +104,20 @@ bool Board::IsInsideBoard(const Location & loc) const
 	return loc.x >= 0 && loc.x < width && loc.y >= 0 && loc.y < height;
 }
 
-unsigned int Board::CheckForObject(const Location & loc) const
+Board::CellObjects Board::CheckForObject(const Location & loc) const
 {
 	return objectMatrix[(loc.y * width) + loc.x];
 }
 
 
-void Board::SpawnObject(const Location & loc, const int type)
+void Board::SpawnObject(const Location & loc, CellObjects type)
 {
 	objectMatrix[(loc.y * width) + loc.x] = type;
 }
 
 void Board::DespawnObject(const Location & loc)
 {
-	objectMatrix[(loc.y * width) + loc.x] = EmptyBoard;
+	objectMatrix[(loc.y * width) + loc.x] = CellObjects::EmptyBoard;
 }
 
 void Board::DrawAllObjects() 
@@ -134,18 +129,18 @@ void Board::DrawAllObjects()
 			const Location casilla = Location{ k,i };
 			switch (CheckForObject(casilla))
 			{
-			case Poison:
+			case CellObjects::Poison:
 			{
 				DrawSmallCell(casilla, Colors::Magenta);
 				break;
 			}
-			case Stone:
+			case CellObjects::Stone:
 			{
 				DrawSmallCell(casilla, Colors::Gray);
 				
 				break;
 			}
-			case Apples:
+			case CellObjects::Apples:
 			{
 				DrawSmallCell(casilla, apple.GetColor() );
 				break;

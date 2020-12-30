@@ -5,6 +5,17 @@
 
 class Board
 {
+
+public:
+	enum class CellObjects
+	{
+		EmptyBoard,
+		Stone,
+		Poison,
+		Apples,
+		Snek
+ 
+	};
 private:
 	class Apple
 	{
@@ -29,9 +40,9 @@ public:
 	int GetWidth() const;
 	int GetHeight() const;
 	bool IsInsideBoard(const Location& loc) const;
-	unsigned int CheckForObject(const Location& loc)const;
+	CellObjects CheckForObject(const Location& loc)const;
 		
-	void SpawnObject(const Location& loc, const int type);
+	void SpawnObject(const Location& loc, CellObjects type);
 	void DespawnObject(const Location& loc);
 	void DrawAllObjects();
 	void UpdateObjects();
@@ -43,7 +54,7 @@ private:
 	static constexpr int dimension = 20; //dimensión de cada celda
 	static constexpr int borderWidth = 2;
 	static constexpr Color BorderColor = Colors::Red;
-	unsigned int objectMatrix[width * height] = { 0 };
+	CellObjects objectMatrix[width * height] = { CellObjects::EmptyBoard };
 	
 	Graphics& gfx;
 	Apple apple;

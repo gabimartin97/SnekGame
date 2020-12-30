@@ -21,11 +21,7 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "SpriteCodex.h"
-#define Snek 4
-#define Apples 3
-#define Poison 2
-#define Stone 1
-#define EmptyBoard 0
+
 
 Game::Game(MainWindow& wnd)
 	:
@@ -56,10 +52,7 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	float dt = frameTimer.Mark();
-	
-	
-
+		
 	if (isGameStarted && !isGameOver) {
 		
 		ManageSnakeMovement();			//Control de movimiento por teclado
@@ -79,20 +72,18 @@ void Game::UpdateModel()
 			}
 			else
 			{
-				
-
 				switch (board.CheckForObject(next))
 				{
 
-				case Apples:
+				case Board::CellObjects::Apples:
 				{
 
 					Location randomCoords = { boardDistX(rng),boardDistY(rng) };
-					while (board.CheckForObject(randomCoords) != EmptyBoard && !(randomCoords == next))
+					while (board.CheckForObject(randomCoords) != Board::CellObjects::EmptyBoard && !(randomCoords == next))
 					{
 						randomCoords = { boardDistX(rng),boardDistY(rng) };
 					}
-					board.SpawnObject(randomCoords, Apples);
+					board.SpawnObject(randomCoords, Board::CellObjects::Apples);
 					points++;
 					snek.Grow(board);
 					appleEaten.Play();
@@ -101,11 +92,11 @@ void Game::UpdateModel()
 					if ((points % pointsForStone == 0) && (stonesSpawned < maxStones))
 					{
 						Location randomCoords = { boardDistX(rng),boardDistY(rng) };
-						while (board.CheckForObject(randomCoords) != EmptyBoard && !(randomCoords == next))
+						while (board.CheckForObject(randomCoords) != Board::CellObjects::EmptyBoard && !(randomCoords == next))
 						{
 							randomCoords = { boardDistX(rng),boardDistY(rng) };
 						}
-						board.SpawnObject(randomCoords, Stone);
+						board.SpawnObject(randomCoords, Board::CellObjects::Stone);
 						stonesSpawned++;
 						
 					}
@@ -115,11 +106,11 @@ void Game::UpdateModel()
 					break;
 				}
 							
-				case Stone:
+				case Board::CellObjects::Stone:
 					isGameOver = true;
 					break;
 
-				case Poison:
+				case Board::CellObjects::Poison:
 				{
 					
 					if (snakeMoveByPeriod > minSnekPeriod) snakeMoveByPeriod -= 0.01f;
@@ -230,13 +221,13 @@ void Game::GenerateRandomPoison()
 	for (int i = 0; i < maxPoison; i++)
 	{
 		Location randomCoords = { boardDistX(rng),boardDistY(rng) };
-		while (board.CheckForObject(randomCoords) != EmptyBoard)
+		while (board.CheckForObject(randomCoords) != Board::CellObjects::EmptyBoard)
 		{
 			randomCoords = { boardDistX(rng),boardDistY(rng) };
 
 		}
 
-		board.SpawnObject(randomCoords, Poison);
+		board.SpawnObject(randomCoords, Board::CellObjects::Poison);
 		poisonSpawned++;
 	}
 }
@@ -246,13 +237,13 @@ void Game::GenerateRandomApples()
 	for (int i = 0; i < maxApples; i++)
 	{
 		Location randomCoords = { boardDistX(rng),boardDistY(rng) };
-		while (board.CheckForObject(randomCoords) != EmptyBoard)
+		while (board.CheckForObject(randomCoords) != Board::CellObjects::EmptyBoard)
 		{
 			randomCoords = { boardDistX(rng),boardDistY(rng) };
 
 		}
 		
-		board.SpawnObject(randomCoords, Apples);
+		board.SpawnObject(randomCoords, Board::CellObjects::Apples);
 	}
 }
 	
