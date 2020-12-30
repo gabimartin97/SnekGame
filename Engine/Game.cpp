@@ -121,8 +121,7 @@ void Game::UpdateModel()
 
 				case Poison:
 				{
-					//int poisonIndex = board.GetObstacleIndex(next);
-					//poison[poisonIndex].Despawn(board);
+					
 					if (snakeMoveByPeriod > minSnekPeriod) snakeMoveByPeriod -= 0.01f;
 					pedo.Play(rng,0.8f);
 					break;

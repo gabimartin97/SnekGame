@@ -16,7 +16,7 @@ void Board::Resetboard()
 {
 	for (int i = 0; i < (width * height); i++)
 	{
-		obstacleMatrix[i] = 0 ;
+		objectMatrix[i] = 0 ;
 	}
 	
 }
@@ -111,29 +111,18 @@ bool Board::IsInsideBoard(const Location & loc) const
 
 unsigned int Board::CheckForObject(const Location & loc) const
 {
-	return obstacleMatrix[(loc.y * width) + loc.x];
+	return objectMatrix[(loc.y * width) + loc.x];
 }
 
-unsigned int Board::GetObstacleIndex(const Location & loc)
-{
-	return obstacleMatrixIndexes[(loc.y * width) + loc.x];
-}
-
-void Board::WriteObstacle(const Location & loc, const unsigned int type_in, const unsigned int index_in)
-{
-	obstacleMatrix[(loc.y * width) + loc.x] = type_in;
-	obstacleMatrixIndexes[(loc.y * width) + loc.x] = index_in;
-}
-
-void Board::DeleteObstacle(const Location & loc)
-{
-	obstacleMatrix[(loc.y * width) + loc.x] = 0;
-	obstacleMatrixIndexes[(loc.y * width) + loc.x] = 0;
-}
 
 void Board::SpawnObject(const Location & loc, const int type)
 {
-	obstacleMatrix[(loc.y * width) + loc.x] = type;
+	objectMatrix[(loc.y * width) + loc.x] = type;
+}
+
+void Board::DespawnObject(const Location & loc)
+{
+	objectMatrix[(loc.y * width) + loc.x] = EmptyBoard;
 }
 
 void Board::DrawAllObjects() 

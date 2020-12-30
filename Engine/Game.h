@@ -63,9 +63,9 @@ private:
 	static constexpr int maxApples = 5;
 	static constexpr int pointsForStone = 2;
 	static constexpr int pointsForSpeedBoost = 2;
-	static constexpr float minSnekPeriod = 0.04f;
+	static constexpr float minSnekPeriod = 0.02f;
 	Snake snek;
-	Location delta_loc = { 0, 1 };
+	Location delta_loc = { 1, 0 };
 	SoundEffect pedo;
 	Sound appleEaten;
 	 
