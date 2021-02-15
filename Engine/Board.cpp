@@ -5,6 +5,31 @@ Board::Board(Graphics & gfx_in)
 	:
 	gfx(gfx_in)
 {
+	std::ifstream settingsFile("Settings.txt");
+	std::string settingsBuffer;
+	std::string numberInString;
+	while (!settingsFile.eof()) settingsBuffer.push_back(settingsFile.get()); //copio settings.txt al buffer
+
+
+
+	auto settingPosition = settingsBuffer.find("[Tile Size]");
+	auto i = settingPosition + sizeof("[Tile Size]") ;
+	char c = settingsBuffer[i];
+
+
+	for (; c != '\n' && c != 0; i++, c = settingsBuffer[i])
+	{
+		numberInString.push_back(c);
+	}
+	dimension = std::stoi(numberInString);
+
+
+
+
+
+
+	 originX = (((Graphics::ScreenWidth) / 2) - (width / 2 * dimension));
+	 originY = (((Graphics::ScreenHeight) / 2) - (height / 2 * dimension));
 }
 
 void Board::Resetboard()

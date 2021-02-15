@@ -86,7 +86,7 @@ void Game::UpdateModel()
 					board.SpawnObject(randomCoords, Board::CellObjects::Apples);
 					points++;
 					snek.Grow(board);
-					appleEaten.Play();
+					//appleEaten.Play();
 					
 
 					if ((points % pointsForStone == 0) && (stonesSpawned < maxStones))
@@ -114,7 +114,7 @@ void Game::UpdateModel()
 				{
 					
 					if (snakeMoveByPeriod > minSnekPeriod) snakeMoveByPeriod -= 0.01f;
-					pedo.Play(rng,0.8f);
+					//pedo.Play(rng,0.8f);
 					break;
 				}
 				default:

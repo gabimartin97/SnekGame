@@ -2,6 +2,9 @@
 #include "Graphics.h"
 #include "Location.h"
 #include <assert.h>
+#include <iostream>
+#include <string>
+#include <fstream>
 
 class Board
 {
@@ -50,9 +53,9 @@ private:
 
 	static constexpr int width = 25;	// Ancho de tablero en cantidad de celdas
 	static constexpr int height = 25;	// Alto de tablero en cantidad de celdas
-	static constexpr int dimension = 20; //dimensión de cada celda
-	static constexpr int originX = (((Graphics::ScreenWidth) / 2) - (width / 2 * dimension));
-	static constexpr int originY = (((Graphics::ScreenHeight) / 2) - (height / 2 * dimension));;
+	int dimension; //dimensión de cada celda
+	int originX;
+	int originY;
 	static constexpr int borderWidth = 2;
 	static constexpr Color BorderColor = Colors::Red;
 	CellObjects objectMatrix[width * height] = { CellObjects::EmptyBoard };
