@@ -36,6 +36,9 @@ private:
 
 public:
 	Board(Graphics& gfx_in);
+	~Board();
+	Board(const Board&) = delete;
+	Board& operator=(const Board&) = delete;
 	void Resetboard();
 	void DrawCell(const Location& loc, Color c);
 	void DrawSmallCell(const Location& loc, Color c);
@@ -51,14 +54,15 @@ public:
 	void UpdateObjects();
 private:
 
-	static constexpr int width = 25;	// Ancho de tablero en cantidad de celdas
-	static constexpr int height = 25;	// Alto de tablero en cantidad de celdas
+	int width;	// Ancho de tablero en cantidad de celdas
+	int height;	// Alto de tablero en cantidad de celdas
 	int dimension; //dimensión de cada celda
 	int originX;
 	int originY;
+	int nCells;
 	static constexpr int borderWidth = 2;
 	static constexpr Color BorderColor = Colors::Red;
-	CellObjects objectMatrix[width * height] = { CellObjects::EmptyBoard };
+	CellObjects* objectMatrix;
 	
 	Graphics& gfx;
 	Apple apple;

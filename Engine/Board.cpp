@@ -7,12 +7,46 @@ Board::Board(Graphics & gfx_in)
 {
 	std::ifstream settingsFile("Settings.txt");
 	std::string settingsBuffer;
-	std::string numberInString;
+	std::string settingType;
+	std::string settingValue;
 	while (!settingsFile.eof()) settingsBuffer.push_back(settingsFile.get()); //copio settings.txt al buffer
+	size_t start = 0;
+	size_t end = 0;
+	int totalSettings = 3;
+	
+	for(int i=0; i < totalSettings; i++)
+	{ 
+		 start = settingsBuffer.find('[',end);
+		 end = settingsBuffer.find(']',start) + 1;
+
+		for (auto i = start; i < end; i++)
+		{
+			settingType.push_back(settingsBuffer[i]);
+		}
+		char c = settingsBuffer[end + 1];
+
+		for (auto i = end + 1; c != '\n' && c != 0; i++, c = settingsBuffer[i])
+		{
+			settingValue.push_back(c);
+		}
 
 
-
-	auto settingPosition = settingsBuffer.find("[Tile Size]");
+		if (settingType.compare("[Tile Size]") == 0)
+		{
+			dimension = std::stoi(settingValue);
+		} else
+			if (settingType.compare("[Board Width]") == 0)
+			{
+				width = std::stoi(settingValue);
+			}else
+				if (settingType.compare("[Board Height]") == 0)
+				{
+					height = std::stoi(settingValue);
+				}
+			settingType.erase();
+			settingValue.erase();
+	}
+	/*auto settingPosition = settingsBuffer.find("[Tile Size]");
 	auto i = settingPosition + sizeof("[Tile Size]") ;
 	char c = settingsBuffer[i];
 
@@ -21,7 +55,7 @@ Board::Board(Graphics & gfx_in)
 	{
 		numberInString.push_back(c);
 	}
-	dimension = std::stoi(numberInString);
+	dimension = std::stoi(numberInString);*/
 
 
 
@@ -30,6 +64,19 @@ Board::Board(Graphics & gfx_in)
 
 	 originX = (((Graphics::ScreenWidth) / 2) - (width / 2 * dimension));
 	 originY = (((Graphics::ScreenHeight) / 2) - (height / 2 * dimension));
+	 nCells = width * height;
+	 objectMatrix = new CellObjects[nCells];
+
+	 for (int i = 0; i < (width * height); i++)
+	 {
+		 objectMatrix[i] = CellObjects::EmptyBoard;
+	 }
+
+}
+
+Board::~Board()
+{
+	delete[] objectMatrix;
 }
 
 void Board::Resetboard()
