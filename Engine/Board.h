@@ -3,8 +3,7 @@
 #include "Location.h"
 #include <assert.h>
 #include <iostream>
-#include <string>
-#include <fstream>
+#include "GameSettings.h"
 
 class Board
 {
@@ -35,7 +34,7 @@ private:
 
 
 public:
-	Board(Graphics& gfx_in);
+	Board(Graphics& gfx_in, GameSettings& settings);
 	~Board();
 	Board(const Board&) = delete;
 	Board& operator=(const Board&) = delete;
@@ -59,10 +58,10 @@ private:
 	int dimension; //dimensión de cada celda
 	int originX;
 	int originY;
-	int nCells;
+	
 	static constexpr int borderWidth = 2;
 	static constexpr Color BorderColor = Colors::Red;
-	CellObjects* objectMatrix;
+	CellObjects* objectMatrix = nullptr;
 	
 	Graphics& gfx;
 	Apple apple;

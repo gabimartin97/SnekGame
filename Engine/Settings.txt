@@ -1,7 +1,12 @@
 [Tile Size]
 20
-[Board Height]
-25
-
-[Board Width]
-25
+[Board Size]
+25 25
+[MaxStones]
+50
+[MaxApples]
+5
+[MinSnekPeriod]
+0.02
+[MaxPoison]
+150

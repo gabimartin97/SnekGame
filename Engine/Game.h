@@ -29,6 +29,8 @@
 #include "FrameTimer.h"
 #include "Sound.h"
 #include "SoundEffect.h"
+#include "GameSettings.h"
+
 
 
 class Game
@@ -52,18 +54,20 @@ private:
 	MainWindow& wnd;
 	Graphics gfx;  //Objeto gráfico de la clase Graphics. Sus métodos permiten manipular los pixeles de la pantalla.
 	/********************************/
+	GameSettings gameSettings; //Recordar que el orden de las variables importa a la hora de llamar al constructor de Game
 	Board board;
 	FrameTimer frameTimer;
 	std::random_device dev; //seed?
 	std::mt19937 rng; //random number generator 
 	std::uniform_int_distribution<int> boardDistX;
 	std::uniform_int_distribution<int> boardDistY;
-	static constexpr int maxStones = 50;
-	static constexpr int maxPoison = 125;
-	static constexpr int maxApples = 5;
+	 int maxStones;
+	 int maxPoison;
+	 int maxApples;
+	 float minSnekPeriod;
 	static constexpr int pointsForStone = 2;
 	static constexpr int pointsForSpeedBoost = 2;
-	static constexpr float minSnekPeriod = 0.02f;
+	 
 	Snake snek;
 	Location delta_loc = { 1, 0 };
 	SoundEffect pedo;
@@ -76,8 +80,8 @@ private:
 	bool keyAlreadyPressed = false;
 	bool isGameOver = false;
 	bool isGameStarted = false;
-	unsigned int stonesSpawned = 0;
-	unsigned int poisonSpawned = 0;
+	 int stonesSpawned = 0;
+	 int poisonSpawned = 0;
 	
 
 	

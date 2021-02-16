@@ -27,7 +27,12 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	board(gfx),
+	gameSettings("settings.txt"),
+	maxStones(gameSettings.GetMaxStones()),
+	maxPoison(gameSettings.GetMaxPosion()),
+	maxApples(gameSettings.GetMaxApples()),
+	minSnekPeriod(gameSettings.GetMinSnekPeriod()),
+	board(gfx, gameSettings),
 	rng(dev()),
 	boardDistX(0, board.GetWidth() - 1),
 	boardDistY(0, board.GetHeight() - 1),
