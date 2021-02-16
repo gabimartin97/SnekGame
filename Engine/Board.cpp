@@ -22,6 +22,7 @@ Board::Board(Graphics & gfx_in, GameSettings& settings)
 Board::~Board()
 {
 	delete[] objectMatrix;
+	objectMatrix = nullptr;
 }
 
 void Board::Resetboard()

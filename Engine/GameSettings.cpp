@@ -33,8 +33,16 @@ GameSettings::GameSettings(std::string filename)
         {
             settingsDocument >> maxPoison;
         }
-    }
+        else if (line.empty())
+        {
+        }
+        else
+        {
+            throw std::runtime_error("Hay boludeces en settings.txt : " + line);
+        }
 
+
+    }
 }
 
 int GameSettings::GetTileSize()
