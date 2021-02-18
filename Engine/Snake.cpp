@@ -2,9 +2,10 @@
 #include <assert.h>
 Snake::Snake(const Location & loc_in, Board& board)
 {
+	segments.emplace_back();
 	segments[0].InitHead(loc_in, board );
 	for (int i = 1; i <= nSegments; i++) {
-		
+		segments.emplace_back();
 		segments[i].InitBody(loc_in, createdSegments, board);
 		createdSegments++;
 	}
@@ -17,10 +18,12 @@ void Snake::ResetSnake(const Location & loc_in, Board& board)
 	 selfCollided = false;
 	 isCollided = false;
 	 nSegments = 4;
-
+	 segments.clear();
+	 segments.emplace_back();
 	 segments[0].InitHead(loc_in, board);
-	 for (int i = 1; i <= nSegments; i++) {
-
+	 for (int i = 1; i <= nSegments; i++)
+	 {
+		 segments.emplace_back();
 		 segments[i].InitBody(loc_in, createdSegments, board);
 		 createdSegments++;
 	 }
@@ -45,6 +48,7 @@ void Snake::Grow(Board& board)
 	if (nSegments < nSegmentsMax)
 	{
 		Location prevSegmentLoc = segments[nSegments - 1].GetLoc();
+		segments.emplace_back();
 		segments[nSegments].InitBody(prevSegmentLoc, createdSegments, board);
 		nSegments++;
 	}

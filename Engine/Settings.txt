@@ -5,8 +5,8 @@
 [MaxStones]
 50
 [MaxApples]
-5
+25
 [MinSnekPeriod]
 0.02
 [MaxPoison]
-150
+20

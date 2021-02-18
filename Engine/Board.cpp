@@ -149,7 +149,7 @@ void Board::DrawAllObjects()
 			{
 			case CellObjects::Poison:
 			{
-				DrawSmallCell(casilla, Colors::Magenta);
+				DrawSmallCell(casilla, Colors::MakeRGB(87,0,127));
 				break;
 			}
 			case CellObjects::Stone:

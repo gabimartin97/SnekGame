@@ -1,5 +1,6 @@
 #pragma once
 #include "Board.h"
+#include<vector>
 //#include "Apple.h"
 class Snake {
 private:
@@ -40,6 +41,6 @@ private: //Este otro private simplemente es visual, como par separar cosas
 	int createdSegments = 1;
 	bool selfCollided = false;
 	bool isCollided = false;
-	Segment segments[nSegmentsMax];
+	std::vector<Segment> segments;
 	Location loc;
 };
