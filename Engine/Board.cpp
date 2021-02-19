@@ -9,27 +9,15 @@ Board::Board(Graphics & gfx_in, GameSettings& settings)
 	dimension(settings.GetTileSize()),
 	originX(((Graphics::ScreenWidth) / 2) - (width / 2 * dimension)),
 	originY(((Graphics::ScreenHeight) / 2) - (height / 2 * dimension)),
-	objectMatrix(new CellObjects[width * height])
+	objectMatrix(int(width * height), CellObjects::EmptyBoard)
 {
-	
-	 for (int i = 0; i < (width * height); i++)
-	 {
-		 objectMatrix[i] = CellObjects::EmptyBoard;
-	 }
-
-}
-
-Board::~Board()
-{
-	delete[] objectMatrix;
-	objectMatrix = nullptr;
 }
 
 void Board::Resetboard()
 {
-	for (int i = 0; i < (width * height); i++)
+	for (CellObjects& b : objectMatrix)
 	{
-		objectMatrix[i] = CellObjects::EmptyBoard ;
+		b = CellObjects::EmptyBoard ;
 	}
 	
 }

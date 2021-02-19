@@ -4,10 +4,10 @@
 #include <assert.h>
 #include <iostream>
 #include "GameSettings.h"
+#include <vector>
 
 class Board
 {
-
 public:
 	enum class CellObjects
 	{
@@ -16,8 +16,7 @@ public:
 		Poison,
 		Apples,
 		Snek
- 
-	};
+ 	};
 private:
 	class Apple
 	{
@@ -32,12 +31,8 @@ private:
 		int b = 0;
 	};
 
-
 public:
 	Board(Graphics& gfx_in, GameSettings& settings);
-	~Board();
-	Board(const Board&) = delete;
-	Board& operator=(const Board&) = delete;
 	void Resetboard();
 	void DrawCell(const Location& loc, Color c);
 	void DrawSmallCell(const Location& loc, Color c);
@@ -61,7 +56,8 @@ private:
 	
 	static constexpr int borderWidth = 2;
 	static constexpr Color BorderColor = Colors::Red;
-	CellObjects* objectMatrix = nullptr;
+	 
+	std::vector<CellObjects> objectMatrix;
 	
 	Graphics& gfx;
 	Apple apple;

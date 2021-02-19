@@ -2,71 +2,49 @@
 #include <assert.h>
 Snake::Snake(const Location & loc_in, Board& board)
 {
-	segments.emplace_back();
-	segments[0].InitHead(loc_in, board );
-	for (int i = 1; i <= nSegments; i++) {
-		segments.emplace_back();
-		segments[i].InitBody(loc_in, createdSegments, board);
-		createdSegments++;
-	}
-	
+	segments.emplace_back(loc_in, board);
+		
 }
 
 void Snake::ResetSnake(const Location & loc_in, Board& board)
 {
-	 createdSegments = 1;
 	 selfCollided = false;
 	 isCollided = false;
-	 nSegments = 4;
 	 segments.clear();
-	 segments.emplace_back();
-	 segments[0].InitHead(loc_in, board);
-	 for (int i = 1; i <= nSegments; i++)
-	 {
-		 segments.emplace_back();
-		 segments[i].InitBody(loc_in, createdSegments, board);
-		 createdSegments++;
-	 }
-
+	 segments.emplace_back(loc_in, board);
 }
 
 void Snake::MoveBy(const Location& delta_loc,Board& board)
 
 {
 	//Comenzamos desde el último segmento y avanzamos hacia el anterior. Todos menos la cabeza
-	for (int i = nSegments - 1; i > 0; i--) {
-		if (i == (nSegments - 1)) board.DespawnObject(segments[i].GetLoc()); //El último segmento limpia la casilla en la que estuvo
+	for (size_t i = segments.size() - 1; i > 0; i--) {
+		if (i == (segments.size() - 1)) board.DespawnObject(segments[i].GetLoc()); //El último segmento limpia la casilla en la que estuvo
 		segments[i].Follow(segments[i - 1]);							//Se desplaza
 		board.SpawnObject(segments[i].GetLoc(), obstacleType);     //Escribe su nueva ubicación en el tablero
 	}
 	segments[0].MoveBy(delta_loc);  //La cabeza avanza
-	board.SpawnObject(segments[0].GetLoc(), obstacleType);
+	board.SpawnObject(segments.front().GetLoc(), obstacleType);
 }
 
 void Snake::Grow(Board& board)
 {
-	if (nSegments < nSegmentsMax)
-	{
-		Location prevSegmentLoc = segments[nSegments - 1].GetLoc();
-		segments.emplace_back();
-		segments[nSegments].InitBody(prevSegmentLoc, createdSegments, board);
-		nSegments++;
-	}
-	createdSegments++;
+	Location prevSegmentLoc = segments[segments.size() -1].GetLoc();
+	segments.emplace_back(prevSegmentLoc, segments.size(), board);
 }
 
 void Snake::Draw(Board& board) const
 {
-	for (int i = 0; i < nSegments; i++)
+	for ( const auto& b : segments)
 	{
-		segments[i].Draw(board);
+		b.Draw(board);
 	}
 	
 }
 
 void Snake::CheckSelfCollision(const Location& next_mov)
 {
-	for (int i = 0; i < nSegments - 1; i++) {
+	for (int i = 0; i < segments.size() - 1; i++) {
 		if (segments[i].GetLoc() == next_mov) {
 			selfCollided = true;
 			break;
@@ -88,18 +66,18 @@ Location Snake::GetNextHeadLocation(const Location & delta_loc) const
 }
 
 
-
-void Snake::Segment::InitHead(const Location& loc_in, Board& board)
+Snake::Segment::Segment(const Location& loc_in, Board& board)
+	:
+	loc(loc_in),
+	c(Snake::headColor)
 {
-	loc = loc_in; // El compilador asigna automáticamente cada data member
-	board.SpawnObject(loc,obstacleType);
-	c = Snake::headColor;
+	board.SpawnObject(loc, obstacleType);
 }
 
-void Snake::Segment::InitBody(const Location& loc_in,int createdSegments, Board& board)
+Snake::Segment::Segment(const Location& loc_in, int createdSegments, Board& board)
+	:
+	loc(loc_in)
 {
-	
-	loc = loc_in; // El compilador asigna automáticamente cada data member
 	board.SpawnObject(loc, obstacleType);
 	if (createdSegments % 3 == 0) {
 		c = bodyColor1;
@@ -111,8 +89,6 @@ void Snake::Segment::InitBody(const Location& loc_in,int createdSegments, Board&
 	{
 		c = bodyColor3;
 	}
-	
-	
 }
 
 void Snake::Segment::Follow(const Segment& next)

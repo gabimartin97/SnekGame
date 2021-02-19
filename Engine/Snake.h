@@ -1,13 +1,15 @@
 #pragma once
 #include "Board.h"
 #include<vector>
-//#include "Apple.h"
-class Snake {
+
+class Snake
+{
 private:
-	class Segment {
+	class Segment 
+	{
 	public:
-		void InitHead(const Location& loc_in,  Board& board); //Toma como parámetro la posición de la cabeza
-		void InitBody(const Location& loc_in, int createdSegments,  Board& board);			//Inicializar segmentos cuando la snake crece. No toma parámetros porque sigue al segm. anterior.
+		Segment(const Location& loc_in,  Board& board); //Toma como parámetro la posición de la cabeza
+		Segment(const Location& loc_in, int createdSegments,  Board& board);	//Inicializar segmentos cuando la snake crece. No toma parámetros porque sigue al segm. anterior.
 		void Follow(const Segment& next);
 		void MoveBy(const Location& delta_loc);
 		void Draw(Board& board) const;
@@ -17,7 +19,6 @@ private:
 		Location loc;
 		Color c;
 		Board::CellObjects obstacleType = Board::CellObjects::Snek;
-
 	};
 
 public:
@@ -35,10 +36,7 @@ private: //Este otro private simplemente es visual, como par separar cosas
 	static constexpr Color bodyColor1 = Colors::MakeRGB(0, 102, 51);
 	static constexpr Color bodyColor2 = Colors::MakeRGB(0, 102, 0);
 	static constexpr Color bodyColor3 = Colors::MakeRGB(0, 80, 21);
-	static constexpr int nSegmentsMax = 100;
 	Board::CellObjects obstacleType = Board::CellObjects::Snek;
-	int nSegments = 2; //points to the next unused member of the segment array
-	int createdSegments = 1;
 	bool selfCollided = false;
 	bool isCollided = false;
 	std::vector<Segment> segments;
